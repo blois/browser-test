@@ -1,0 +1,10 @@
+name: mocha_style_test
+author: "Pete Blois <pete@blois.us>"
+homepage: https://github.com/blois/
+description: Dart unit tests displaying the results using Mocha styling
+version: 0.0.1
+dependencies:
+  unittest: ">=0.4.5"
+  browser: any
+environment:
+  sdk: ">=0.4.6"
