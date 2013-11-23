@@ -50,6 +50,6 @@ main() {
     test('userAgent firefox', () {
       expect(window.navigator.userAgent, matches('Firefox'));
     },
-    status: chrome(should: [FAIL]));
+    status: chrome(should: FAIL, reason: 'Chrome is not Firefox'));
   });
 }

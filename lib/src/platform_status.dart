@@ -3,21 +3,26 @@ library browser_test.platform_status;
 import 'dart:html' as dom;
 
 class PlatformStatus {
-  final Iterable<ExpectedStatus> _statuses;
-  final PlatformConstraint _constraint;
+  final Iterable<ExpectedStatus> statuses;
+  final PlatformConstraint constraint;
+  final String reason;
 
-  PlatformStatus(this._constraint, status):
-      this._statuses = status is Iterable ? status : [status];
+  PlatformStatus(this.constraint, status, this.reason):
+      this.statuses = status is Iterable ? status : [status];
 
   bool get isActive {
-    return _constraint.isActive;
+    return constraint.isActive;
   }
 
-  bool get canPass => isActive && _statuses.contains(PASS);
-  bool get canFail => isActive && _statuses.contains(FAIL);
+  bool get canPass => isActive && statuses.contains(PASS);
+  bool get canFail => isActive && statuses.contains(FAIL);
 
   String toString() {
-    return '$_constraint: [${_statuses.join(",")}]';
+    var result = '$constraint: [${statuses.join(",")}]';
+    if (reason != null) {
+      result = result + ' reason: $reason';
+    }
+    return result;
   }
 }
 

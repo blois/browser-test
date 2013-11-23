@@ -62,41 +62,48 @@ void tearDown(body()) {
 }
 
 Future<Group> get onStart => _config.start.first.then((_) => _root);
-Stream<Test> get onTestStart => _config.testStart.map((testCase) => _idToTest[testCase.id]);
-Stream<Test> get onTestResult => _config.testResult.map((testCase) => _idToTest[testCase.id]);
-Stream<Test> get onTestResultChanged => _config.testResultChanged.map((testCase) => _idToTest[testCase.id]);
+Stream<Test> get onTestStart =>
+    _config.testStart.map((testCase) => _idToTest[testCase.id]);
+Stream<Test> get onTestResult =>
+    _config.testResult.map((testCase) => _idToTest[testCase.id]);
+Stream<Test> get onTestResultChanged =>
+    _config.testResultChanged.map((testCase) => _idToTest[testCase.id]);
 Future<Group> get onDone => _config.start.first.then((_) => _root);
 
 
-PlatformStatus ie({int version, int lessThan, should}) {
-  return _status(Platform.ie, version, lessThan, should);
+PlatformStatus ie({int version, int lessThan, should, String reason}) {
+  return _status(Platform.ie, version, lessThan, should, reason);
 }
 
-PlatformStatus chrome({int version, int lessThan, should}) {
-  return _status(Platform.chrome, version, lessThan, should);
+PlatformStatus chrome({int version, int lessThan, should, String reason}) {
+  return _status(Platform.chrome, version, lessThan, should, reason);
 }
 
-PlatformStatus firefox({int version, int lessThan, should}) {
-  return _status(Platform.firefox, version, lessThan, should);
+PlatformStatus firefox({int version, int lessThan, should, String reason}) {
+  return _status(Platform.firefox, version, lessThan, should, reason);
 }
 
-PlatformStatus safari({int version, int lessThan, should}) {
-  return _status(Platform.safari, version, lessThan, should);
+PlatformStatus safari({int version, int lessThan, should, String reason}) {
+  return _status(Platform.safari, version, lessThan, should, reason);
 }
 
-PlatformStatus dartium({int version, int lessThan, should}) {
-  return _status(Platform.dartium, version, lessThan, should);
+PlatformStatus dartium({int version, int lessThan, should, String reason}) {
+  return _status(Platform.dartium, version, lessThan, should, reason);
 }
 
-PlatformStatus _status(Platform platform, int version, int lessThan, should) {
+PlatformStatus _status(Platform platform, int version, int lessThan, should,
+    String reason) {
   if (version != null && lessThan != null) {
     throw new ArgumentError('version and lessThan cannot both be specified');
   }
   if (version != null) {
-    return new PlatformStatus(new PlatformConstraint.version(platform, version), should);
+    return new PlatformStatus(
+        new PlatformConstraint.version(platform, version), should, reason);
   } else if (lessThan != null) {
-    return new PlatformStatus(new PlatformConstraint.lessThan(platform, lessThan), should);
+    return new PlatformStatus(
+        new PlatformConstraint.lessThan(platform, lessThan), should, reason);
   } else {
-    return new PlatformStatus(new PlatformConstraint.any(platform), should);
+    return new PlatformStatus(
+        new PlatformConstraint.any(platform), should, reason);
   }
 }

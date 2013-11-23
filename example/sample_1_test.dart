@@ -48,7 +48,7 @@ main() {
     }, status: [
       ie(version: 9, should: FAIL),
       chrome(lessThan: 31, should: FAIL),
-      dartium(should: [PASS, FAIL])
+      dartium(should: [PASS, FAIL], reason: 'Issue 9402- timers are flaky')
     ]);
   });
 }
