@@ -1,26 +1,27 @@
-library mocha_style_test.test_group;
+library browser_test.mocha_result;
 
 import 'dart:html';
-import 'package:unittest/unittest.dart';
+
+import 'test.dart';
 
 const MEDIUM_TEST_DURATION = const Duration(milliseconds: 100);
 const SLOW_TEST_DURATION = const Duration(milliseconds: 1000);
 
-class TestResult {
-  final TestCase _testCase;
+class MochaResult {
+  final Test _test;
   final Element _root = new LIElement();
 
-  TestResult(this._testCase);
+  MochaResult(this._test);
 
   void render(Element host) {
     host.append(_root);
     _root.classes.add('test');
 
     var title = new HeadingElement.h2()
-      ..text = _testCase.description.split(groupSep).last;
+      ..text = _test.description;//.split(groupSep).last;
     _root.append(title);
 
-    var url = _testCase.description.replaceAll(groupSep, '>');
+    var url = _test.path;//.replaceAll(groupSep, '/');
     title.append(new AnchorElement()
         ..classes.add('replay')
         ..href = '?grep=$url'
@@ -34,22 +35,26 @@ class TestResult {
   void completed() {
     _root.classes.remove('pending');
 
-    if (_testCase.passed) {
+    if (_test.passed) {
       _root.classes.add('pass');
       _root.querySelector('h2').append(
           new SpanElement()
               ..classes.add('duration')
-              .. text = '${_testCase.runningTime.inMilliseconds}ms');
+              .. text = '${_test.runningTime.inMilliseconds}ms');
     } else {
       _root.classes.add('fail');
-      _root.append(
-          new Element.tag('pre')
-            ..classes.add('error')
-            ..text = _testCase.message + _testCase.stackTrace.toString());
+      var errorElement = _root.querySelector('pre.error');
+      if (errorElement == null) {
+        errorElement = new Element.tag('pre')
+            ..classes.add('error');
+        _root.append(errorElement);
+      }
+
+      errorElement.text = _test.message + _test.stackTrace.toString();
     }
-    if (_testCase.runningTime > SLOW_TEST_DURATION) {
+    if (_test.runningTime > SLOW_TEST_DURATION) {
       _root.classes.add('slow');
-    } else if (_testCase.runningTime > MEDIUM_TEST_DURATION) {
+    } else if (_test.runningTime > MEDIUM_TEST_DURATION) {
       _root.classes.add('medium');
     }
   }

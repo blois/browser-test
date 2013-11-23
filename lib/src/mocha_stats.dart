@@ -1,7 +1,8 @@
-library mocha_style_test.test_group;
+library browser_test.mocha_stats;
 
 import 'dart:html';
-import 'package:unittest/unittest.dart';
+
+import 'test.dart';
 
 class TestStats {
   Element _root;
@@ -43,7 +44,7 @@ class TestStats {
     _stopwatch.start();
   }
 
-  void onTestResult(TestCase test) {
+  void onTestResult(Test test) {
     if (test.passed) {
       ++_passes;
       _root.querySelector('.passes em').text = '$_passes';

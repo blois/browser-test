@@ -1,7 +1,7 @@
-name: mocha_style_test
+name: browser_test
 author: "Pete Blois <pete@blois.us>"
 homepage: https://github.com/blois/
-description: Dart unit tests displaying the results using Mocha styling
+description: Dart unit tests configuration for browser testing
 version: 0.0.1
 dependencies:
   unittest: ">=0.4.5"

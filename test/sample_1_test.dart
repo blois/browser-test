@@ -2,17 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-library js_tests;
+library browser_tests;
 
 import 'dart:async';
 import 'dart:html';
 
-import 'package:mocha_style_test/mocha.dart';
-import 'package:unittest/unittest.dart';
+import 'package:browser_test/browser_test.dart';
 
 main() {
-  useMochaConfiguration();
-
   test('zero', () {
     return new Future.delayed(new Duration(milliseconds: 10));
   });
@@ -43,11 +40,15 @@ main() {
     });
 
     test('seven', () {
-      expect(true, false);
+      return new Future.delayed(new Duration(milliseconds: 10));
     });
 
     test('eight', () {
       return new Future.delayed(new Duration(milliseconds: 200));
-    });
+    }, status: [
+      ie(version: 9, should: FAIL),
+      chrome(lessThan: 31, should: FAIL),
+      dartium(should: [PASS, FAIL])
+    ]);
   });
 }

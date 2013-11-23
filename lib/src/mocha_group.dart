@@ -1,14 +1,14 @@
-library mocha_style_test.test_group;
+library browser_test.mocha_group;
 
 import 'dart:html';
-import 'test_result.dart';
+import 'mocha_result.dart';
 
-class TestGroup {
+class MochaGroup {
   final String _name;
   final Element _root = new LIElement();
-  final Map<String, TestGroup> _children = <String, TestGroup>{};
+  final Map<String, MochaGroup> _children = <String, MochaGroup>{};
 
-  TestGroup(this._name);
+  MochaGroup(this._name);
 
   void render(Element host) {
     host.append(_root);
@@ -19,15 +19,15 @@ class TestGroup {
               ..text = _name))
       ..append(new UListElement());
   }
-  void addResult(TestResult result) {
+  void addResult(MochaResult result) {
     result.render(_root.querySelector('ul'));
   }
 
-  TestGroup operator[](String groupNam) {
+  MochaGroup operator[](String groupName) {
     var group = _children[groupName];
     if (group == null) {
-      group = new TestGroup(groupName);
-      _children[group] = group;
+      group = new MochaGroup(groupName);
+      _children[groupName] = group;
       group.render(_root.querySelector('ul'));
     }
     return group;

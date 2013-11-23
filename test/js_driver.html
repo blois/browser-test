@@ -1,0 +1,15 @@
+<!doctype html>
+
+<title>Mocha UI Tests</title>
+<script src="packages/unittest/test_controller.js"></script>
+
+<div id='mocha'></div>
+
+<script src='packages/browser_test/mocha_runner.js'></script>
+<script>
+  // Simple test runner which declares the test files in JS.
+  mochaRunner([
+    'sample_1_test.dart',
+    'sample_2_test.dart',
+  ]);
+</script>
